@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const postController = require("../controllers/postController");
 
 const postsRouter = Router();
 
@@ -8,9 +9,7 @@ postsRouter.post("/", (req, res) => {
   res.send("POST / - create a new post");
 });
 
-postsRouter.get("/", (req, res) => {
-  res.send("GET / - list all posts");
-});
+postsRouter.get("/", postController.getPosts);
 
 postsRouter.get("/:postid", (req, res) => {
   res.send(`GET /${req.params.postid} - get single post`);
