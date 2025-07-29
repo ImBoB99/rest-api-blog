@@ -5,9 +5,7 @@ const postsRouter = Router();
 
 // posts
 
-postsRouter.post("/", (req, res) => {
-  res.send("POST / - create a new post");
-});
+postsRouter.post("/", postController.createPost);
 
 postsRouter.get("/", postController.getPosts);
 

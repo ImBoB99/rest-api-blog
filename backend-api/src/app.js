@@ -5,6 +5,9 @@ const postsRouter = require("./routes/postsRouter");
 const userRouter = require("./routes/userRouter");
 const app = express();
 
+app.use(express.urlencoded());
+app.use(express.json());
+
 app.use("/api/posts", postsRouter);
 app.use("/api/user", userRouter);
 
