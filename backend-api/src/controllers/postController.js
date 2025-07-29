@@ -3,6 +3,7 @@ const db = require("../db/queries/posts");
 const createPost = async (req, res) => {
   const { title, content, authorId = 1, isPublished } = req.body;
 
+  // TODO: Replace with express validator
   if (!title || typeof title !== "string" || title.trim() === "") {
     return res.status(400).json({ error: "Title is required." });
   }
@@ -44,6 +45,7 @@ const updatePostById = async (req, res) => {
   const postid = Number(req.params.postid);
   const { title, content, isPublished } = req.body;
 
+  // TODO: Replace with express validator
   if (!title || typeof title !== "string" || title.trim() === "") {
     return res.status(400).json({ error: "Title is required." });
   }

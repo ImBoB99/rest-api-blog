@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const postController = require("../controllers/postController");
+const commentController = require("../controllers/commentController");
 
 const postsRouter = Router();
 
@@ -17,12 +18,8 @@ postsRouter.delete("/:postid", postController.deletePostById);
 
 // comments
 
-postsRouter.post("/:postid/comments", (req, res) => {
-  res.send(`POST /posts/${req.params.postid}/comments - create a new comment`);
-});
+postsRouter.post("/:postid/comments", commentController.createComment);
 
-postsRouter.get("/:postid/comments", (req, res) => {
-  res.send(`GET /posts/${req.params.postid}/comments - list comments`);
-});
+postsRouter.get("/:postid/comments", commentController.getComments);
 
 module.exports = postsRouter;
