@@ -9,17 +9,11 @@ postsRouter.post("/", postController.createPost);
 
 postsRouter.get("/", postController.getPosts);
 
-postsRouter.get("/:postid", (req, res) => {
-  res.send(`GET /${req.params.postid} - get single post`);
-});
+postsRouter.get("/:postid", postController.getPostById);
 
-postsRouter.put("/:postid", (req, res) => {
-  res.send(`PUT /${req.params.postid} - update post`);
-});
+postsRouter.put("/:postid", postController.updatePostById);
 
-postsRouter.delete("/:postid", (req, res) => {
-  res.send(`DELETE /${req.params.postid} - delete post`);
-});
+postsRouter.delete("/:postid", postController.deletePostById);
 
 // comments
 

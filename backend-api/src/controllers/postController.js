@@ -1,14 +1,5 @@
 const db = require("../db/queries/posts");
 
-const getPosts = async (req, res) => {
-  try {
-    const posts = await db.getPosts();
-    res.status(200).json(posts);
-  } catch (error) {
-    res.status(500).json({ error: "Could not fetch posts" });
-  }
-};
-
 const createPost = async (req, res) => {
   const { title, content, authorId = 1, isPublished } = req.body;
 
@@ -30,4 +21,55 @@ const createPost = async (req, res) => {
   }
 };
 
-module.exports = { createPost, getPosts };
+const getPosts = async (req, res) => {
+  try {
+    const posts = await db.getPosts();
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json({ error: "Could not fetch posts" });
+  }
+};
+
+const getPostById = async (req, res) => {
+  const postid = Number(req.params.postid);
+  try {
+    const post = await db.getPostById(postid);
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ error: "Could not fetch the post" });
+  }
+};
+
+const updatePostById = async (req, res) => {
+  const postid = Number(req.params.postid);
+  const { title, content, isPublished } = req.body;
+
+  if (!title || typeof title !== "string" || title.trim() === "") {
+    return res.status(400).json({ error: "Title is required." });
+  }
+
+  // Enforce that published posts must have content
+  if (isPublished === true && (!content || content.trim() === "")) {
+    return res.status(400).json({ error: "Published posts must have content." });
+  }
+
+  try {
+    const post = await db.updatePostById(postid, title, isPublished, content);
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ error: "Could not update the post" });
+  }
+};
+
+const deletePostById = async (req, res) => {
+  const postid = Number(req.params.postid);
+
+  try {
+    const post = await db.deletePostById(postid);
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ error: "Could not delete the post" });
+  }
+};
+
+module.exports = { createPost, getPosts, getPostById, updatePostById, deletePostById };
