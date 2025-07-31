@@ -6,6 +6,7 @@ const {
   validatePostUpdate,
   validatePostDeletion,
 } = require("../middleware/postValidation");
+const { validateCommentCreation } = require("../middleware/commentValidation");
 
 const postsRouter = Router();
 
@@ -23,7 +24,7 @@ postsRouter.delete("/:postid", validatePostDeletion, postController.deletePostBy
 
 // comments
 
-postsRouter.post("/:postid/comments", commentController.createComment);
+postsRouter.post("/:postid/comments", validateCommentCreation, commentController.createComment);
 
 postsRouter.get("/:postid/comments", commentController.getComments);
 

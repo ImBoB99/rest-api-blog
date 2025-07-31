@@ -15,8 +15,7 @@ const validatePostCreation = [
     .withMessage("Content must be a string")
     .trim()
     .notEmpty()
-    .withMessage("Content must not be empty if post is being published")
-    .escape(),
+    .withMessage("Content must not be empty if post is being published"),
 
   (req, res, next) => {
     const errors = validationResult(req);

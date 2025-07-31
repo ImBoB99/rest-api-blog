@@ -15,15 +15,6 @@ const createComment = async (req, res) => {
   const postid = Number(req.params.postid);
   const { content, email } = req.body;
 
-  // TODO: Replace with express validator
-  if (!email || typeof email !== "string" || email.trim() === "") {
-    return res.status(400).json({ error: "Email is required." });
-  }
-
-  if (!content || typeof content !== "string" || content.trim() === "") {
-    return res.status(400).json({ error: "Content is required." });
-  }
-
   try {
     const comment = await db.createComment(postid, content, email);
     res.status(200).json(comment);
