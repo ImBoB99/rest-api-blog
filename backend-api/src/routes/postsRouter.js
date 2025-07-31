@@ -1,20 +1,25 @@
 const { Router } = require("express");
 const postController = require("../controllers/postController");
 const commentController = require("../controllers/commentController");
+const {
+  validatePostCreation,
+  validatePostUpdate,
+  validatePostDeletion,
+} = require("../middleware/postValidation");
 
 const postsRouter = Router();
 
 // posts
 
-postsRouter.post("/", postController.createPost);
+postsRouter.post("/", validatePostCreation, postController.createPost);
 
 postsRouter.get("/", postController.getPosts);
 
 postsRouter.get("/:postid", postController.getPostById);
 
-postsRouter.put("/:postid", postController.updatePostById);
+postsRouter.put("/:postid", validatePostUpdate, postController.updatePostById);
 
-postsRouter.delete("/:postid", postController.deletePostById);
+postsRouter.delete("/:postid", validatePostDeletion, postController.deletePostById);
 
 // comments
 
