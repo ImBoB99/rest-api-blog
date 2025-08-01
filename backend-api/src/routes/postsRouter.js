@@ -7,20 +7,35 @@ const {
   validatePostDeletion,
 } = require("../middleware/postValidation");
 const { validateCommentCreation } = require("../middleware/commentValidation");
-
+const passport = require("passport");
 const postsRouter = Router();
 
 // posts
 
-postsRouter.post("/", validatePostCreation, postController.createPost);
+postsRouter.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  validatePostCreation,
+  postController.createPost,
+);
 
 postsRouter.get("/", postController.getPosts);
 
 postsRouter.get("/:postid", postController.getPostById);
 
-postsRouter.put("/:postid", validatePostUpdate, postController.updatePostById);
+postsRouter.put(
+  "/:postid",
+  passport.authenticate("jwt", { session: false }),
+  validatePostUpdate,
+  postController.updatePostById,
+);
 
-postsRouter.delete("/:postid", validatePostDeletion, postController.deletePostById);
+postsRouter.delete(
+  "/:postid",
+  passport.authenticate("jwt", { session: false }),
+  validatePostDeletion,
+  postController.deletePostById,
+);
 
 // comments
 
