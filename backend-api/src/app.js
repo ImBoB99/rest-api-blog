@@ -1,6 +1,7 @@
 require("dotenv").config({ quiet: true });
 require("module-alias/register"); // Enables path alias for @prisma globally
 const express = require("express");
+const cors = require("cors");
 const postsRouter = require("./routes/postsRouter");
 const userRouter = require("./routes/userRouter");
 
@@ -12,6 +13,11 @@ const passport = require("passport");
 require("../config/passport");
 
 const app = express();
+
+app.use(cors()); // Allow all origins by default
+
+// Optionally: Restrict to the frontend
+// app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.urlencoded());
 app.use(express.json());
 
