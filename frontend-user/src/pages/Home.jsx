@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { getPosts } from "../helpers/postHelpers";
-import PostCards from "./PostCards";
-import Header from "./Header";
-import Footer from "./Footer";
+import { useEffect, useState } from 'react';
+import { getPosts } from '../helpers/postHelpers';
+import PostCards from '../components/PostCards';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Home() {
   const [postsArray, setPostsArray] = useState(null);
@@ -18,10 +18,8 @@ function Home() {
 
   return (
     <div>
-      <Header></Header>
       <h1>Posts</h1>
       <PostCards postsArray={postsArray}></PostCards>
-      <Footer></Footer>
     </div>
   );
 }
