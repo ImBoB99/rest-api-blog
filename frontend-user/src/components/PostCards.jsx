@@ -7,12 +7,7 @@ function PostCards({ postsArray }) {
 
       {postsArray &&
         postsArray.map((post) => (
-          <PostCard
-            key={post.id}
-            title={post.title}
-            content={post.content}
-            publishedOn={post.createdAt}
-          />
+          <PostCard key={post.id} id={post.id} title={post.title} content={post.content} publishedOn={post.createdAt} />
         ))}
     </div>
   );

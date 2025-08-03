@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getPosts } from '../helpers/postHelpers';
 import PostCards from '../components/PostCards';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 
 function Home() {
   const [postsArray, setPostsArray] = useState(null);
