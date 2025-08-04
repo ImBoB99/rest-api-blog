@@ -8,7 +8,6 @@ import router from './routes/router.jsx';
 
 export default function App() {
   const [postsArray, setPostsArray] = useState(null);
-  console.log(postsArray);
 
   useEffect(() => {
     getPosts()
