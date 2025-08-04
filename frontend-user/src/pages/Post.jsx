@@ -6,6 +6,8 @@ function Post() {
   const posts = useContext(PostsContext);
   const { id } = useParams();
 
+  // Using context for learning purposes, in real proj just fetch /posts/{id}
+
   if (!posts) return <p className="text-gray-500">Loading post...</p>;
 
   const post = posts.find((post) => post.id.toString() === id);
