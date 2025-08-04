@@ -1,24 +1,32 @@
-import { StrictMode } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import MainLayout from './layouts/MainLayout.jsx';
-import Home from './pages/Home.jsx';
-import Post from './pages/Post.jsx';
+import { RouterProvider } from 'react-router-dom';
+import { getPosts } from './helpers/postHelpers';
+import { PostsContext } from './contexts/PostsContext';
+import router from './routes/router.jsx';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <MainLayout></MainLayout>,
-    children: [
-      { index: true, element: <Home></Home> },
-      { path: '/post/:id', element: <Post></Post> },
-    ],
-  },
-]);
+export default function App() {
+  const [postsArray, setPostsArray] = useState(null);
+  console.log(postsArray);
+
+  useEffect(() => {
+    getPosts()
+      .then((data) => {
+        setPostsArray(data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  return (
+    <PostsContext.Provider value={postsArray}>
+      <RouterProvider router={router} />
+    </PostsContext.Provider>
+  );
+}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <App></App>
   </StrictMode>
 );

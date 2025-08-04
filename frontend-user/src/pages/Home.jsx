@@ -1,23 +1,14 @@
-import { useEffect, useState } from 'react';
-import { getPosts } from '../helpers/postHelpers';
 import PostCards from '../components/PostCards';
+import { useContext } from 'react';
+import { PostsContext } from '../contexts/PostsContext';
 
 function Home() {
-  const [postsArray, setPostsArray] = useState(null);
-  console.log(postsArray);
-
-  useEffect(() => {
-    getPosts()
-      .then((data) => {
-        setPostsArray(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  const posts = useContext(PostsContext);
 
   return (
     <div>
       <h1>Posts</h1>
-      <PostCards postsArray={postsArray}></PostCards>
+      <PostCards postsArray={posts}></PostCards>
     </div>
   );
 }
