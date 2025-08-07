@@ -32,6 +32,10 @@ app.post("/api/login", passport.authenticate("local", { session: false }), (req,
   });
 });
 
+app.get("/api/verify", passport.authenticate("jwt", { session: false }), (req, res) => {
+  res.sendStatus(200)
+})
+
 const PORT = process.env.APP_PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
