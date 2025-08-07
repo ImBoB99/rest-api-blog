@@ -25,7 +25,7 @@ app.use("/api/posts", postsRouter);
 app.use("/api/user", userRouter);
 
 app.post("/api/login", passport.authenticate("local", { session: false }), (req, res) => {
-  jwt.sign({ id: req.user.id }, process.env.SECRET_KEY, (error, token) => {
+  jwt.sign({ id: req.user.id, username: req.user.username }, process.env.SECRET_KEY, (error, token) => {
     res.json({
       token: token,
     });

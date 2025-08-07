@@ -5,14 +5,38 @@ function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/admin/posts');
+    if (!token) return;
+
+    async function verifyToken() {
+      try {
+        const response = await fetch('http://localhost:3000/api/verify', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          console.log('Token authorized');
+          setIsLoggedIn(true);
+          navigate('/admin/posts');
+        } else {
+          localStorage.removeItem('token');
+          console.warn('Invalid token, cleared.');
+        }
+      } catch (error) {
+        console.error('Token verification failed:', error);
+        localStorage.removeItem('token');
+      }
     }
+
+    verifyToken();
   }, []);
 
   async function userLogin(email, password) {
@@ -48,9 +72,13 @@ function LoginForm() {
     const result = await userLogin(email, password);
     if (result?.token) {
       localStorage.setItem('token', result.token);
-      console.log('User is logged in');
+      setIsLoggedIn(true);
+      window.dispatchEvent(new Event('authChanged'));
+      navigate('/admin/posts');
     }
   }
+
+  if (isLoggedIn) return <p>You are already logged in.</p>;
 
   return (
     <form onSubmit={handleSubmit}>

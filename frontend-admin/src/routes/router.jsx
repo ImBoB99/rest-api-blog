@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Login from '../pages/Login';
 import Posts from '../pages/Posts';
+import ProtectedRoute from '../routes/ProtectedRoute';
 
 import { Navigate } from 'react-router-dom';
 
@@ -16,7 +17,14 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <Login /> },
-      { path: 'posts', element: <Posts /> },
+      {
+        path: 'posts',
+        element: (
+          <ProtectedRoute>
+            <Posts />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
