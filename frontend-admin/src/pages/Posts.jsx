@@ -18,6 +18,28 @@ function Posts() {
     fetchPosts();
   }, []);
 
+  const deletePost = async (id) => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    try {
+      const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+        mode: 'cors',
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error('Failed to delete post');
+      const data = await res.json();
+
+      console.log(data);
+      setPosts((prev) => prev.filter((post) => post.id !== id));
+    } catch (error) {
+      console.log('Error deleting post', error);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -38,6 +60,13 @@ function Posts() {
               <p className={`text-sm font-medium mt-1 ${post.published ? 'text-green-600' : 'text-red-600'}`}>
                 {post.published ? 'Published' : 'Not Published'}
               </p>
+              <button
+                type="button"
+                onClick={() => deletePost(post.id)}
+                className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200"
+              >
+                Delete Post
+              </button>
             </div>
           ))
         )}
