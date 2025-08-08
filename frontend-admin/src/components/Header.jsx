@@ -10,8 +10,12 @@ function Header() {
     function handleAuthChange() {
       const token = localStorage.getItem('token');
       if (token) {
-        const decoded = jwtDecode(token);
-        setUserName(decoded.username);
+        try {
+          const decoded = jwtDecode(token);
+          setUserName(decoded.username);
+        } catch {
+          setUserName(null);
+        }
       } else {
         setUserName(null);
       }
@@ -23,21 +27,24 @@ function Header() {
   }, []);
 
   function logOut() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      localStorage.removeItem('token');
-      window.dispatchEvent(new Event('authChanged'));
-      navigate('/admin', { replace: true });
-    }
+    localStorage.removeItem('token');
+    window.dispatchEvent(new Event('authChanged'));
+    navigate('/admin', { replace: true });
   }
 
   return (
-    <header>
-      <h2>Admin Panel</h2>
+    <header className="bg-gray-800 text-white px-6 py-4 flex justify-between items-center shadow-md">
+      <h2 className="text-xl font-semibold">Admin Panel</h2>
       {userName && (
-        <div>
-          <p>Logged in as: {userName}</p>
-          <button type="button" onClick={logOut}>
+        <div className="flex items-center gap-4">
+          <p className="text-sm">
+            Logged in as: <span className="font-medium">{userName}</span>
+          </p>
+          <button
+            type="button"
+            onClick={logOut}
+            className="bg-red-600 hover:bg-red-700 px-4 py-1 rounded text-sm transition"
+          >
             Log Out
           </button>
         </div>
@@ -45,4 +52,5 @@ function Header() {
     </header>
   );
 }
+
 export default Header;

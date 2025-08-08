@@ -3,6 +3,7 @@ import MainLayout from '../layouts/MainLayout';
 import Login from '../pages/Login';
 import Posts from '../pages/Posts';
 import ProtectedRoute from '../routes/ProtectedRoute';
+import AddPost from '../pages/AddPost';
 
 import { Navigate } from 'react-router-dom';
 
@@ -22,6 +23,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Posts />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'add-post',
+        element: (
+          <ProtectedRoute>
+            <AddPost />
           </ProtectedRoute>
         ),
       },

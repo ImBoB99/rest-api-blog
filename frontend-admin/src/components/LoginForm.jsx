@@ -23,12 +23,10 @@ function LoginForm() {
         });
 
         if (response.ok) {
-          console.log('Token authorized');
           setIsLoggedIn(true);
           navigate('/admin/posts');
         } else {
           localStorage.removeItem('token');
-          console.warn('Invalid token, cleared.');
         }
       } catch (error) {
         console.error('Token verification failed:', error);
@@ -78,20 +76,32 @@ function LoginForm() {
     }
   }
 
-  if (isLoggedIn) return <p>You are already logged in.</p>;
+  if (isLoggedIn) {
+    return <p className="text-green-600 text-center">You are already logged in.</p>;
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+        className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         required
+        className="border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-      <button type="submit">Login</button>
-      {error && <p>{error}</p>}
+      <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+        Login
+      </button>
+      {error && <p className="text-red-600 text-sm">{error}</p>}
     </form>
   );
 }
