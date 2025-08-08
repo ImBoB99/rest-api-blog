@@ -60,13 +60,20 @@ function Posts() {
               <p className={`text-sm font-medium mt-1 ${post.published ? 'text-green-600' : 'text-red-600'}`}>
                 {post.published ? 'Published' : 'Not Published'}
               </p>
-              <button
-                type="button"
-                onClick={() => deletePost(post.id)}
-                className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200"
-              >
-                Delete Post
-              </button>
+
+              <div className="mt-4 flex justify-between items-center">
+                <Link to={`/admin/edit-post/${post.id}`} className="text-blue-600 hover:underline font-medium">
+                  Edit
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={() => deletePost(post.id)}
+                  className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200"
+                >
+                  Delete Post
+                </button>
+              </div>
             </div>
           ))
         )}

@@ -4,6 +4,7 @@ import Login from '../pages/Login';
 import Posts from '../pages/Posts';
 import ProtectedRoute from '../routes/ProtectedRoute';
 import AddPost from '../pages/AddPost';
+import EditPost from '../pages/EditPost';
 
 import { Navigate } from 'react-router-dom';
 
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <AddPost />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'edit-post/:id',
+        element: (
+          <ProtectedRoute>
+            <EditPost />
           </ProtectedRoute>
         ),
       },
